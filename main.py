@@ -257,6 +257,7 @@ from email.header import decode_header
 from bs4 import BeautifulSoup
 import google.generativeai as genai
 from dotenv import load_dotenv
+import json
 
 # Load environment variables
 load_dotenv()
@@ -450,3 +451,5 @@ if __name__ == "__main__":
         print(f"Subject: {email_data['subject']}")
         print(f"Category: {email_data['category']}")
         print(f"Summary: {email_data['summary']}\n")
+        with open("emails.json","w") as json_file :
+            json.dump(emails,json_file,indent=4)

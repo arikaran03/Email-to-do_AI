@@ -9,7 +9,7 @@ const HEADERS = {
   "Content-Type": "application/json",
   "Notion-Version": "2022-06-28",
 };
-async function createPage(title, description) {
+async function createPage(title, description, status="Not started") {
   const response = await fetch(`${NOTION_API_URL}/pages`, {
     method: "POST",
     headers: HEADERS,
@@ -17,7 +17,8 @@ async function createPage(title, description) {
       parent: { database_id: NOTION_DATABASE_ID },
       properties: {
         Name: { title: [{ text: { content: title } }] },
-        Details: { rich_text: [{ text: { content: description } }] }
+        Details: { rich_text: [{ text: { content: description } }] },
+        Status: { status: {name:status}}
       }
     }),
   });
@@ -38,4 +39,4 @@ async function updatePage(pageId, newTitle) {
   const data = await response.json();
   console.log("Updated Page:", data);
 }
-createPage("Ari", "This is a test page-5.");
+createPage("mahi", "This is a test page-2.","In progres");
