@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "subject": "\ud83d\ude80 Codeforces Contest Tomorrow at 8 PM \u2013 Get Ready!",
+        "category": "Exam/Contest Alerts",
+        "summary": "The Codeforces Rated Contest, open to all, will be held tomorrow, March 18, 2025, at 8:00 PM IST for 2 hours on the Codeforces platform, featuring algorithmic challenges and offering rating points to top performers."
+    },
+    {
+        "id": "2",
+        "subject": "\ud83c\udf89 Congratulations! You\u2019re Selected for the Next Round at Google \ud83d\ude80",
+        "category": "Interview Updates",
+        "summary": "You've been selected for the next round of interviews at Google on March 23, 2025, the type and time of which will be communicated shortly via calendar invite, and you should confirm your availability by replying to this email."
+    },
+    {
+        "id": "3",
+        "subject": "\ud83d\ude80 Reminder: Tech Talk on Improving Competitive Programming Skills \u2013 Join Us Tomorrow!",
+        "category": "Exam/Contest Alerts",
+        "summary": "The Competitive Programming Club invites members to a Tech Talk on improving competitive programming skills, featuring strategies, common mistake avoidance, resource recommendations, and a Q&A, taking place tomorrow, March 20, 2025, at 10:00 AM on Zoom."
+    },
+    {
+        "id": "4",
+        "subject": "Final Reminder: Microsoft Internship Application Deadline Approaching!",
+        "category": "Interview Updates",
+        "summary": "Applications for the Microsoft Software Engineering Internship (Summer 2025), offering remote and on-site roles at various locations, are due by March 25, 2025."
+    },
+    {
+        "id": "5",
+        "subject": "Fwd: NPTEL Newsletter: March 2025: Vol 6: Week 3!",
+        "category": "Course & Learning Resources",
+        "summary": "Summary unavailable."
+    },
+    {
+        "id": "6",
+        "subject": "Fwd: arikaran03/Live_QGEN_AI - 1 internal incident detected",
+        "category": "Other",
+        "summary": "GitGuardian detected a leaked Google API key in the arikaran03/Live_QGEN_AI GitHub repository (commit 7177f19) on March 18, 2025, at 04:47:37 PM UTC."
+    }
+]
