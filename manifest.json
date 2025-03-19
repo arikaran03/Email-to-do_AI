@@ -1,22 +1,44 @@
 {
-    "manifest_version": 3,
-    "name": "Live QGen AI",
-    "version": "1.0.0",
-    "description": "Real-time transcription for Zoom & Google Meet",
-    "permissions": ["activeTab", "scripting"],
-    "host_permissions": ["https://*.zoom.us/*","https://meet.google.com/*"],
-    "background": {
-      "service_worker": "background.js"
+  "manifest_version": 3,
+  "name": "Mail to do",
+  "version": "0.1",
+  "description": "A Chrome Extension that provides interface to store the important mails like to do list",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "declarativeContent"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/ai-help.png",
+        "assets/download.png",
+        "assets/copy.png",
+        "assets/download_white.png",
+        "assets/ai-help-white.png",
+        "assets/checklist.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/ext-icon.png",
+      "24": "assets/ext-icon.png",
+      "32": "assets/ext-icon.png"
     },
-    "action": {
-      "default_popup": "popup.html",
-      "default_icon": "icon.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["https://*.zoom.us/*","https://meet.google.com/*"],
-        "js": ["content.js"]
-      }
-    ]
+    "default_popup": "popup.html",
+    "default_title": "AI Help Extension"
   }
-  
+}
