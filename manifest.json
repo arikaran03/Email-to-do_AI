@@ -27,7 +27,8 @@
         "assets/copy.png",
         "assets/download_white.png",
         "assets/ai-help-white.png",
-        "assets/checklist.png"
+        "assets/checklist.png",
+        "emails.json"
       ],
       "matches": ["<all_urls>"]
     }
