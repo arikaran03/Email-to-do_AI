@@ -10,15 +10,14 @@ import json
 from datetime import datetime
 import email.utils
 
-# Load environment variables
-load_dotenv()
+with open("update.json", "r") as file:
+    config = json.load(file)
 
-# Configuration
 EMAIL_HOST = "imap.gmail.com"
-EMAIL_USER = os.getenv("EMAIL_USER")
-EMAIL_PASS = os.getenv("EMAIL_PASS")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-TIMEOUT = 15  # Connection timeout
+EMAIL_USER = config.get("user-email")
+EMAIL_PASS = config.get("app-password")
+GEMINI_API_KEY = config.get("Gemini-api-key")
+TIMEOUT = 15
 
 # Initialize Gemini AI
 genai.configure(api_key=GEMINI_API_KEY)
