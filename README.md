@@ -28,22 +28,22 @@ This **Chrome extension** enhances **email productivity** by extracting key deta
 
 🛠 **How to create a Google App Password?**  
 1. Navigate to your Google Account → **Manage your Google Account**.  
-    <img src="assets/google_account.jpg" alt="Google Account Home" width="400" height="200">   
+    ![Mange your google account](assets/google_account.JPG) 
 2. 🔍 On the right side of the Account page, open **Security**.  
-    <img src="assets/security.jpg" alt="Google Security Page" width="400" height="200">   
+    ![Google Security page](assets/security.JPG)    
 3. ✅ In the **Security** page, if **Two-Step Verification** is not enabled, **turn it on**.  
-    <img src="assets/verify.jpg" alt="Enable Two-Step Verification" width="400" height="200">  
+    ![Verification](assets/verify.JPG)  
 4. 🔎 Search for **App Passwords** and open it.  
-    <img src="assets/search.jpg" alt="Search for App Passwords" width="200" height="200">  
+    ![Search App Passwords](assets/search.JPG) 
 5. 🏷️ In **App Passwords**, create an app name (e.g., `Mail_To_Do`).  
-    <img src="assets/app_name.jpg" alt="Create App Name" width="200" height="200">  
+    ![App Name](assets/app_name.JPG)   
 6. 🆕 Once the app name is created, your **App Password** will be generated. Use this for authentication.  
-    <img src="assets/app_pass.jpg" alt="Generated App Password" width="200" height="200">  
+    ![App Password](assets/app_pass.JPG)  
 
 - 🤖 **Gemini AI API Key**  
    - Get your **Gemini AI API Key** from [Google AI Studio](https://aistudio.google.com/).  
    - Use this **API Key** for authentication.  
-      <img src="assets/api_key.jpg" alt="Generated API Key" width="400" height="200">
+      ![API Key](assets/api_key.JPG) 
 
 📌 These details are **stored securely in local storage** and used for extracting email details.  
 
