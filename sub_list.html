@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Inportant Mail</title>
+    <link rel="icon" type="image/png" href="mail.png">
+    <style>
+        #subject{
+            padding-left: 32%;
+            font-size: large;
+        }
+        #topic{
+            text-align: center;
+            padding-top: 10%;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="topic">Important Mail</h2>
+    <div id="subject">
+    </div>
+    <script>
+        fetch('emails.json')
+        .then(response => response.json())
+        .then(data => {
+            let container=document.getElementById("subject")
+            let n=data.length ;
+            for(let i=0 ; i<n ; i++){
+                if(data[i]["category"] !== "Other"){
+                    let label = document.createElement("label");
+                    let checkbox = document.createElement("input");
+                    
+                    checkbox.type = "checkbox";
+                    checkbox.value = data[i]["subject"]; 
+                    
+                    label.appendChild(checkbox); 
+                    label.appendChild(document.createTextNode(" " + data[i]["subject"]));
+                    
+                    container.appendChild(label); 
+                    container.appendChild(document.createElement("br"));
+                }
+            }
+        })
+        .catch(error => console.error('Error loading JSON:', error));
+    </script>
+</body>
+</html>

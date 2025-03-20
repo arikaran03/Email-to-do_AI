@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
+from datetime import datetime
+import email.utils
 
 # Load environment variables
 load_dotenv()
@@ -176,22 +178,33 @@ def fetch_and_classify_emails():
                     encoding = encoding or 'utf-8'
                     subject = subject_bytes.decode(encoding, errors='ignore') if isinstance(subject_bytes, bytes) else str(subject_bytes)
 
+                # Extract received date
+                date_tuple = email.utils.parsedate_tz(msg.get("Date"))
+                if date_tuple:
+                    received_datetime = datetime.fromtimestamp(email.utils.mktime_tz(date_tuple))
+                    received_date_str = received_datetime.strftime("%Y-%m-%d")  # Format as YYYY-MM-DD
+                else:
+                    received_date_str = "Unknown Date"
+
+                # Append date to subject
+                subject_with_date = f"{subject} ({received_date_str})"
+
                 # Extract email body
                 body = extract_email_body(msg)
 
                 # Classify email
-                category = classify_email(subject, body)
+                category = classify_email(subject_with_date, body)
 
                 # Skip ignored emails
                 if category == "Ignore":
                     continue
 
                 # Summarize email content
-                summary = summarize_email_content(subject, body)
+                summary = summarize_email_content(subject_with_date, body)
 
                 results.append({
                     "id": e_id.decode(),
-                    "subject": subject,
+                    "subject": subject_with_date,
                     "category": category,
                     "summary": summary
                 })
