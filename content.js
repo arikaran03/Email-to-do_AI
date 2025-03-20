@@ -84,16 +84,16 @@ function showFloatingPage() {
 
 function loadEmails() {
     const checklistContainer = document.getElementById("emailChecklist");
-    checklistContainer.innerHTML = ""; // Clear previous content
+    checklistContainer.innerHTML = `
+        <h3>📌 Progress</h3>
+        <div id="progressSection"></div>
+        <hr>
+        <h3>✅ Completed</h3>
+        <div id="completedSection"></div>
+    `;
 
-    // Create separate sections
-    const progressSection = document.createElement("div");
-    progressSection.id = "progressSection";
-    progressSection.innerHTML = "<h3>📌 In Progress</h3>";
-
-    const completedSection = document.createElement("div");
-    completedSection.id = "completedSection";
-    completedSection.innerHTML = "<h3>✅ Completed</h3>";
+    const progressSection = document.getElementById("progressSection");
+    const completedSection = document.getElementById("completedSection");
 
     const jsonURL = chrome.runtime.getURL("emails.json");
 
@@ -104,11 +104,9 @@ function loadEmails() {
                 const checkedEmails = data.checkedEmails || {};
 
                 emails.forEach(email => {
-                    const category = email.category?.trim().toLowerCase();
-                    if (category === "other" || category === "spam") return;
-
                     const emailItem = document.createElement("div");
                     emailItem.className = "email-item";
+                    emailItem.style.transition = "opacity 0.5s, transform 0.5s";
 
                     const checkbox = document.createElement("input");
                     checkbox.type = "checkbox";
@@ -117,30 +115,66 @@ function loadEmails() {
 
                     const label = document.createElement("label");
                     label.htmlFor = checkbox.id;
-                    label.innerHTML = email.subject;
+                    label.textContent = email.subject;
+
+                    if (checkbox.checked) {
+                        moveToCompleted(emailItem, label);
+                    }
 
                     checkbox.addEventListener("change", function () {
                         checkedEmails[email.id] = checkbox.checked;
                         chrome.storage.local.set({ checkedEmails });
 
-                        updateSections(emailItem, checkbox.checked, progressSection, completedSection);
+                        if (checkbox.checked) {
+                            animateMoveToCompleted(emailItem, label);
+                        } else {
+                            animateMoveToProgress(emailItem, label);
+                        }
                     });
 
                     emailItem.appendChild(checkbox);
                     emailItem.appendChild(label);
                     
-                    // Place in the correct section
-                    updateSections(emailItem, checkbox.checked, progressSection, completedSection);
+                    if (checkbox.checked) {
+                        completedSection.appendChild(emailItem);
+                    } else {
+                        progressSection.appendChild(emailItem);
+                    }
                 });
-
-                checklistContainer.appendChild(progressSection);
-                checklistContainer.appendChild(completedSection);
             });
         })
         .catch(error => {
             console.error("Error loading emails:", error);
             checklistContainer.innerHTML = "<p>Failed to load emails.</p>";
         });
+}
+
+// 🎬 Animation to move an item to "Completed" section
+function animateMoveToCompleted(item, label) {
+    label.style.textDecoration = "line-through";
+    label.style.color = "gray";
+    item.style.opacity = "0";
+    item.style.transform = "translateX(50px)";
+
+    setTimeout(() => {
+        document.getElementById("completedSection").appendChild(item);
+        item.style.opacity = "1";
+        item.style.transform = "translateX(0)";
+    }, 500);
+}
+
+// 🎬 Animation to move an item back to "Progress" section
+function animateMoveToProgress(item, label) {
+    label.style.textDecoration = "none";
+    label.style.color = "black";
+    item.style.opacity = "0";
+    item.style.transform = "translateX(-50px)";
+
+    setTimeout(() => {
+        document.getElementById("progressSection").appendChild(item);
+        item.style.opacity = "1";
+        item.style.transform = "translateX(0)";
+    }, 500);
 }
 
 function waitForGmail() {
