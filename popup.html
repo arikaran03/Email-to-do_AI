@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Meeting Helper</title>
-    <style>
-        body { 
-            /* margin-top: 200px; */
-            width: 325px; 
-            height: 200px;
-            padding: 10px; 
-            text-align: center; font-family: 
-            Arial, sans-serif; 
-        }
-        button { background: #4285F4; color: white; border: none; padding: 10px; cursor: pointer; }
-        button:hover { background: #357AE8; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Credentials</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-    <div id="floatingPage">
+    <div class="container">
+        <h2>Enter Your Details</h2>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label for="password">App Password:</label>
+        <input type="password" id="password" placeholder="Enter App Password">
+
+        <label for="apiKey">Gemini API Key:</label>
+        <input type="text" id="apiKey" placeholder="Enter API Key">
+
+        <button id="saveBtn">Save</button>
+        <p id="status"></p>
     </div>
-    <h3></h3>
-    <button id="start"></button>
+
     <script src="popup.js"></script>
 </body>
 </html>

@@ -142,6 +142,7 @@ function loadEmails() {
                         }
                     });
 
+                    // checkbox.style.borderRadius= 100%;
                     emailItem.appendChild(checkbox);
                     emailItem.appendChild(label);
 
@@ -153,6 +154,7 @@ function loadEmails() {
                 });
             });
         })
+        
         .catch(error => {
             console.error("Error loading emails:", error);
             checklistContainer.innerHTML = "<p>Failed to load emails.</p>";
