@@ -28,7 +28,8 @@
         "assets/download_white.png",
         "assets/ai-help-white.png",
         "assets/checklist.png",
-        "emails.json"
+        "emails.json",
+        "assets/logo.png"
       ],
       "matches": ["<all_urls>"]
     }

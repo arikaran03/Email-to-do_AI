@@ -47,8 +47,8 @@ function showFloatingPage() {
     floatingPage.style.top = "50%";
     floatingPage.style.left = "50%";
     floatingPage.style.transform = "translate(-50%, -50%)";
-    floatingPage.style.width = "600px";  // Increased width
-    floatingPage.style.height = "500px"; // Increased height
+    floatingPage.style.width = "600px";  
+    floatingPage.style.height = "500px"; 
     floatingPage.style.backgroundColor = "#fff";
     floatingPage.style.boxShadow = "0px 0px 15px rgba(0, 0, 0, 0.3)";
     floatingPage.style.borderRadius = "12px";
@@ -57,9 +57,14 @@ function showFloatingPage() {
     floatingPage.style.overflowY = "auto";
     floatingPage.style.display = "flex";
     floatingPage.style.flexDirection = "column";
-    floatingPage.style.justifyContent = "flex-start"; 
     floatingPage.style.alignItems = "center";
     floatingPage.style.textAlign = "center";
+
+    // Add heading image at the top center
+    const headingImage = document.createElement("img");
+    headingImage.src = chrome.runtime.getURL("assets/logo.png"); // Ensure this path matches your extension folder
+    headingImage.style.width = "200px";  
+    headingImage.style.marginBottom = "10px";
 
     // Checklist container
     const checklistContainer = document.createElement("div");
@@ -68,6 +73,7 @@ function showFloatingPage() {
     checklistContainer.style.textAlign = "left";
     checklistContainer.innerHTML = "<p>Loading emails...</p>";
 
+    floatingPage.appendChild(headingImage);  // Append the image first
     floatingPage.appendChild(checklistContainer);
     document.body.appendChild(overlay);
     document.body.appendChild(floatingPage);
@@ -82,14 +88,15 @@ function showFloatingPage() {
 }
 
 
+
 function loadEmails() {
     const checklistContainer = document.getElementById("emailChecklist");
     checklistContainer.innerHTML = `
-        <h3>📌 Progress</h3>
-        <div id="progressSection"></div>
+        <h3>📌 In Progress</h3>
+        <div id="progressSection" style="background-color: #fff9c4; padding: 10px; border-radius: 8px;"></div>
         <hr>
         <h3>✅ Completed</h3>
-        <div id="completedSection"></div>
+        <div id="completedSection" style="background-color: #c8e6c9; padding: 10px; border-radius: 8px;"></div>
     `;
 
     const progressSection = document.getElementById("progressSection");
@@ -148,6 +155,7 @@ function loadEmails() {
             checklistContainer.innerHTML = "<p>Failed to load emails.</p>";
         });
 }
+
 
 // 🎬 Animation to move an item to "Completed" section
 function animateMoveToCompleted(item, label) {

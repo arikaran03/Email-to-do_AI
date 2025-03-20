@@ -3,19 +3,19 @@
         "id": "1",
         "subject": "\ud83d\ude80 Codeforces Contest Tomorrow at 8 PM \u2013 Get Ready! (2025-03-18)",
         "category": "Exam/Contest Alerts",
-        "summary": "The Codeforces Rated Contest, featuring algorithmic challenges on topics like Dynamic Programming, Graphs, and Greedy algorithms, is scheduled for tomorrow, March 18, 2025, at 8:00 PM IST for 2 hours on the Codeforces platform, and is open to all registered users."
+        "summary": "A Codeforces rated contest, open to all, will be held tomorrow, March 19, 2025, at 8:00 PM IST for 2 hours on the Codeforces platform, featuring algorithmic challenges."
     },
     {
         "id": "2",
         "subject": "\ud83c\udf89 Congratulations! You\u2019re Selected for the Next Round at Google \ud83d\ude80 (2025-03-18)",
         "category": "Interview Updates",
-        "summary": "Summary unavailable."
+        "summary": "The candidate has been selected for the next round of interviews at Google on March 23, 2025, the type and time of which will be communicated shortly via calendar invite, and they should confirm availability and prepare accordingly."
     },
     {
         "id": "3",
         "subject": "\ud83d\ude80 Reminder: Tech Talk on Improving Competitive Programming Skills \u2013 Join Us Tomorrow! (2025-03-18)",
         "category": "Exam/Contest Alerts",
-        "summary": "Summary unavailable."
+        "summary": "The Competitive Programming Club is hosting a Tech Talk on improving competitive programming skills on Zoom tomorrow, March 20, 2025, at 10:00 AM, featuring a guest speaker/senior CP member who will cover strategies, common mistakes, resources, and a Q&A."
     },
     {
         "id": "4",
@@ -39,6 +39,24 @@
         "id": "7",
         "subject": "Security alert (2025-03-19)",
         "category": "Exam/Contest Alerts",
+        "summary": "Summary unavailable."
+    },
+    {
+        "id": "8",
+        "subject": "Fwd: American Express | 8 - 12 LPA | Engineer Important Update (2025-03-20)",
+        "category": "Application Deadlines",
+        "summary": "Summary unavailable."
+    },
+    {
+        "id": "9",
+        "subject": "Fwd: Wow, look at your certificate | Engineering: March Series (2025-03-20)",
+        "category": "Other",
+        "summary": "Summary unavailable."
+    },
+    {
+        "id": "10",
+        "subject": "Fwd: 200+ Job Vacancies at McKinsey, BCG, Bain & Co. (2025-03-20)",
+        "category": "Spam & Advertisements",
         "summary": "Summary unavailable."
     }
 ]
