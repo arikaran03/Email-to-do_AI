@@ -28,7 +28,7 @@ function addAIHelpButtonToGmail() {
 
 function showFloatingPage() {
     if (document.getElementById("floating-page")) {
-        loadEmails();  // Refresh emails every time the window opens
+        loadEmails(); // Refresh emails every time the window opens
         return;
     }
 
@@ -56,27 +56,42 @@ function showFloatingPage() {
     floatingPage.style.boxShadow = "0px 0px 15px rgba(0, 0, 0, 0.3)";
     floatingPage.style.borderRadius = "12px";
     floatingPage.style.zIndex = "9999";
-    floatingPage.style.padding = "20px";
-    floatingPage.style.overflowY = "auto";
     floatingPage.style.display = "flex";
     floatingPage.style.flexDirection = "column";
     floatingPage.style.alignItems = "center";
     floatingPage.style.textAlign = "center";
+    floatingPage.style.overflow = "hidden"; // Prevents scrollbar on the floating box
+    floatingPage.style.paddingLeft = "13px" ;
+
+    // Create header container for logo
+    const headerContainer = document.createElement("div");
+    headerContainer.style.position = "sticky";
+    headerContainer.style.top = "0";
+    headerContainer.style.width = "100%";
+    headerContainer.style.backgroundColor = "#fff";
+    headerContainer.style.display = "flex";
+    headerContainer.style.justifyContent = "center"; // Centers the image
+    headerContainer.style.alignItems = "center";
+    headerContainer.style.padding = "2px";
+    headerContainer.style.zIndex = "1000"; // Ensures it stays above other content
 
     // Add heading image at the top center
     const headingImage = document.createElement("img");
     headingImage.src = chrome.runtime.getURL("assets/logo.png");
-    headingImage.style.width = "200px";
-    headingImage.style.marginBottom = "10px";
+    headingImage.style.width = "150px";
 
-    // Checklist container
+    // Create a scrollable container for checklist
     const checklistContainer = document.createElement("div");
     checklistContainer.id = "emailChecklist";
     checklistContainer.style.width = "100%";
     checklistContainer.style.textAlign = "left";
+    checklistContainer.style.overflowY = "auto"; // Enables scrolling inside
+    checklistContainer.style.flex = "1"; // Takes remaining space
+    checklistContainer.style.padding = "20px";
     checklistContainer.innerHTML = "<p>Loading emails...</p>";
 
-    floatingPage.appendChild(headingImage);
+    headerContainer.appendChild(headingImage);
+    floatingPage.appendChild(headerContainer);
     floatingPage.appendChild(checklistContainer);
     document.body.appendChild(overlay);
     document.body.appendChild(floatingPage);
@@ -90,9 +105,6 @@ function showFloatingPage() {
     // Reload emails whenever the floating window opens
     loadEmails();
 }
-
-
-
 
 function loadEmails() {
     const checklistContainer = document.getElementById("emailChecklist");
@@ -127,13 +139,24 @@ function loadEmails() {
                     checkbox.id = `email-${email.id}`;
                     checkbox.checked = !!checkedEmails[email.id];
 
+                    checkbox.style.width = "14.5px"; 
+                    checkbox.style.height = "14.5px";
+                    checkbox.style.borderRadius = "50%";  // 👈 Makes it round
+                    checkbox.style.border = "1px solid #333";
+                    checkbox.style.appearance = "none"; // 👈 Removes default styling
+                    checkbox.style.outline = "none";
+                    checkbox.style.cursor = "pointer";
+                    checkbox.style.backgroundColor = checkbox.checked ? "#C4A484" : "#fff"; // Green when checked
+
                     const label = document.createElement("label");
                     label.htmlFor = checkbox.id;
                     label.textContent = email.subject;
+                    label.style.marginLeft = "8.5px" ;
 
                     checkbox.addEventListener("change", function () {
                         checkedEmails[email.id] = checkbox.checked;
                         chrome.storage.local.set({ checkedEmails });
+                        checkbox.style.backgroundColor = checkbox.checked ? "#C4A484" : "#fff"; // Change background when checked
 
                         if (checkbox.checked) {
                             animateMoveToCompleted(emailItem, label);
@@ -142,7 +165,6 @@ function loadEmails() {
                         }
                     });
 
-                    // checkbox.style.borderRadius= 100%;
                     emailItem.appendChild(checkbox);
                     emailItem.appendChild(label);
 
@@ -154,7 +176,6 @@ function loadEmails() {
                 });
             });
         })
-        
         .catch(error => {
             console.error("Error loading emails:", error);
             checklistContainer.innerHTML = "<p>Failed to load emails.</p>";
@@ -218,5 +239,3 @@ function updateSections(emailItem, isChecked, progressSection, completedSection)
 }
 
 waitForGmail();
-
-
