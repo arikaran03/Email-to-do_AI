@@ -27,7 +27,10 @@ function addAIHelpButtonToGmail() {
 }
 
 function showFloatingPage() {
-    if (document.getElementById("floating-page")) return;
+    if (document.getElementById("floating-page")) {
+        loadEmails();  // Refresh emails every time the window opens
+        return;
+    }
 
     // Create overlay (click outside to close)
     const overlay = document.createElement("div");
@@ -47,8 +50,8 @@ function showFloatingPage() {
     floatingPage.style.top = "50%";
     floatingPage.style.left = "50%";
     floatingPage.style.transform = "translate(-50%, -50%)";
-    floatingPage.style.width = "600px";  
-    floatingPage.style.height = "500px"; 
+    floatingPage.style.width = "600px";
+    floatingPage.style.height = "500px";
     floatingPage.style.backgroundColor = "#fff";
     floatingPage.style.boxShadow = "0px 0px 15px rgba(0, 0, 0, 0.3)";
     floatingPage.style.borderRadius = "12px";
@@ -62,8 +65,8 @@ function showFloatingPage() {
 
     // Add heading image at the top center
     const headingImage = document.createElement("img");
-    headingImage.src = chrome.runtime.getURL("assets/logo.png"); // Ensure this path matches your extension folder
-    headingImage.style.width = "200px";  
+    headingImage.src = chrome.runtime.getURL("assets/logo.png");
+    headingImage.style.width = "200px";
     headingImage.style.marginBottom = "10px";
 
     // Checklist container
@@ -73,24 +76,28 @@ function showFloatingPage() {
     checklistContainer.style.textAlign = "left";
     checklistContainer.innerHTML = "<p>Loading emails...</p>";
 
-    floatingPage.appendChild(headingImage);  // Append the image first
+    floatingPage.appendChild(headingImage);
     floatingPage.appendChild(checklistContainer);
     document.body.appendChild(overlay);
     document.body.appendChild(floatingPage);
 
-    // Clicking outside the floating window closes it
+    // Clicking outside closes the floating window
     overlay.addEventListener("click", function () {
         document.body.removeChild(floatingPage);
         document.body.removeChild(overlay);
     });
 
+    // Reload emails whenever the floating window opens
     loadEmails();
 }
 
 
 
+
 function loadEmails() {
     const checklistContainer = document.getElementById("emailChecklist");
+    
+    // Ensure the checklist is empty before reloading
     checklistContainer.innerHTML = `
         <h3>📌 In Progress</h3>
         <div id="progressSection" style="background-color: #fff9c4; padding: 10px; border-radius: 8px;"></div>
@@ -124,10 +131,6 @@ function loadEmails() {
                     label.htmlFor = checkbox.id;
                     label.textContent = email.subject;
 
-                    if (checkbox.checked) {
-                        moveToCompleted(emailItem, label);
-                    }
-
                     checkbox.addEventListener("change", function () {
                         checkedEmails[email.id] = checkbox.checked;
                         chrome.storage.local.set({ checkedEmails });
@@ -141,7 +144,7 @@ function loadEmails() {
 
                     emailItem.appendChild(checkbox);
                     emailItem.appendChild(label);
-                    
+
                     if (checkbox.checked) {
                         completedSection.appendChild(emailItem);
                     } else {
@@ -155,6 +158,8 @@ function loadEmails() {
             checklistContainer.innerHTML = "<p>Failed to load emails.</p>";
         });
 }
+
+
 
 
 // 🎬 Animation to move an item to "Completed" section
@@ -211,3 +216,5 @@ function updateSections(emailItem, isChecked, progressSection, completedSection)
 }
 
 waitForGmail();
+
+
