@@ -1,4 +1,3 @@
-
 import os
 import imaplib
 import email
@@ -10,6 +9,7 @@ import json
 from datetime import datetime
 import email.utils
 
+# Load configuration from update.json
 with open("update.json", "r") as file:
     config = json.load(file)
 
@@ -18,10 +18,20 @@ EMAIL_USER = config.get("user-email")
 EMAIL_PASS = config.get("app-password")
 GEMINI_API_KEY = config.get("Gemini-api-key")
 TIMEOUT = 15
+PROCESSED_EMAILS_FILE = "processed_emails.json"
 
 # Initialize Gemini AI
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-pro-latest")  
+model = genai.GenerativeModel("gemini-1.5-pro-latest")
+
+# Ensure processed_emails.json exists
+if not os.path.exists(PROCESSED_EMAILS_FILE):
+    with open(PROCESSED_EMAILS_FILE, "w") as f:
+        json.dump([], f)
+
+# Load processed email IDs
+with open(PROCESSED_EMAILS_FILE, "r") as f:
+    processed_emails = set(json.load(f))
 
 def keyword_based_classification(subject, body):
     """Manually classify emails before AI processing based on keywords."""
@@ -36,7 +46,6 @@ def keyword_based_classification(subject, body):
         "how can we help", "support team", "need assistance"
     ]
     
-    # Ignore emails with appreciation/help content
     if any(keyword in subject_lower or keyword in body_lower for keyword in ignore_keywords):
         return "Ignore"
 
@@ -61,9 +70,9 @@ def classify_email(subject, body):
     """Classify emails using manual keywords first, then AI fallback."""
     category = keyword_based_classification(subject, body)
     if category == "Ignore":
-        return category  # Skip ignored emails
+        return category  
     if category:
-        return category  # Return if manually classified
+        return category  
 
     prompt = f"""
     You are an AI assistant that classifies emails for a student. Categorize the following email into one of these categories:
@@ -150,6 +159,7 @@ def extract_email_body(msg):
 
 def fetch_and_classify_emails():
     """Fetch unread emails, classify, and summarize them."""
+    global processed_emails
     mail = None
     try:
         mail = imaplib.IMAP4_SSL(EMAIL_HOST, timeout=TIMEOUT)
@@ -161,55 +171,46 @@ def fetch_and_classify_emails():
             print("No unread emails found.")
             return []
 
-        email_ids = messages[0].split()[:15]  # Process up to 15 emails
+        email_ids = messages[0].split()[:15]  
         results = []
 
         for e_id in email_ids:
+            email_id = e_id.decode()
+
+            if email_id in processed_emails:
+                continue  # Skip already processed emails
+
             try:
                 _, msg_data = mail.fetch(e_id, "(RFC822)")
                 msg = email.message_from_bytes(msg_data[0][1])
                 
-                # Decode subject
-                subject = "(No Subject)"
-                subject_header = decode_header(msg.get("Subject", ""))
-                if subject_header and subject_header[0]:
-                    subject_bytes, encoding = subject_header[0]
-                    encoding = encoding or 'utf-8'
-                    subject = subject_bytes.decode(encoding, errors='ignore') if isinstance(subject_bytes, bytes) else str(subject_bytes)
+                subject = decode_header(msg.get("Subject", ""))[0][0]
+                if isinstance(subject, bytes):
+                    subject = subject.decode(errors='ignore')
 
-                # Extract received date
-                date_tuple = email.utils.parsedate_tz(msg.get("Date"))
-                if date_tuple:
-                    received_datetime = datetime.fromtimestamp(email.utils.mktime_tz(date_tuple))
-                    received_date_str = received_datetime.strftime("%Y-%m-%d")  # Format as YYYY-MM-DD
-                else:
-                    received_date_str = "Unknown Date"
-
-                # Append date to subject
-                subject_with_date = f"{subject} ({received_date_str})"
-
-                # Extract email body
                 body = extract_email_body(msg)
-
-                # Classify email
-                category = classify_email(subject_with_date, body)
-
-                # Skip ignored emails
+                category = classify_email(subject, body)
+                
                 if category == "Ignore":
                     continue
 
-                # Summarize email content
-                summary = summarize_email_content(subject_with_date, body)
+                summary = summarize_email_content(subject, body)
 
                 results.append({
-                    "id": e_id.decode(),
-                    "subject": subject_with_date,
+                    "id": email_id,
+                    "subject": subject,
                     "category": category,
                     "summary": summary
                 })
+
+                processed_emails.add(email_id)  
+
             except Exception as e:
-                print(f"Error processing email ID {e_id.decode()}: {e}")
+                print(f"Error processing email ID {email_id}: {e}")
                 continue
+
+        with open(PROCESSED_EMAILS_FILE, "w") as f:
+            json.dump(list(processed_emails), f)
 
         return results
     except Exception as e:
@@ -225,11 +226,5 @@ def fetch_and_classify_emails():
 
 if __name__ == "__main__":
     emails = fetch_and_classify_emails()
-    for email_data in emails:
-        print(f"ID: {email_data['id']}")
-        print(f"Subject: {email_data['subject']}")
-        print(f"Category: {email_data['category']}")
-        print(f"Summary: {email_data['summary']}\n")
-    
     with open("emails.json", "w") as json_file:
         json.dump(emails, json_file, indent=4)
