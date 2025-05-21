@@ -1,8 +1,21 @@
 node_modules/
+# Ignore compiled output
+*.tsbuildinfo
 
+# Ignore coverage reports
+coverage/
+*.lcov
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore package lock files (optional, if using yarn or pnpm)
+yarn.lock
+pnpm-lock.yaml
 # Ignore log files
 *.log
-
+!.env
 # Ignore environment variable files
 .env
 
