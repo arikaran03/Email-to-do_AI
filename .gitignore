@@ -1,7 +1,8 @@
 node_modules/
 # Ignore compiled output
 *.tsbuildinfo
-
+# Ignore environment variable files
+.env.*
 # Ignore coverage reports
 coverage/
 *.lcov
