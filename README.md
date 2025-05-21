@@ -1,7 +1,77 @@
+# ⚡️ Quick Overview
+
+**Email-to-do_AI** is a Chrome extension that leverages Google APIs and Gemini AI to automatically extract actionable tasks from your Gmail inbox. It streamlines your workflow by converting email content into a categorized to-do list, helping you manage tasks directly from Gmail.
+
+---
+
+## 🏗️ Features
+
+- **Automatic Task Extraction:** Uses AI to identify and extract tasks, deadlines, and summaries from emails.
+- **Categorized To-Do List:** Tasks are split into "In Progress" and "Completed" sections for easy tracking.
+- **Secure Credential Storage:** All sensitive information (email, app password, API key) is stored securely in Chrome's local storage.
+- **User-Friendly Interface:** Integrated checklist icon in Gmail for quick access.
+- **Manual Task Management:** Mark tasks as completed or pending with a single click.
+- **Error Handling:** Built-in debugging support via Chrome DevTools.
+
+---
+
+## 🛠️ Requirements
+
+- **Google Account** with App Password enabled.
+- **Gemini AI API Key** from Google AI Studio.
+- **Google Chrome** (latest version recommended).
+- **VS Code** or any code editor for setup and development.
+
+---
+
+## 📦 Project Structure
+
+```
+/Email-to-do_AI
+│
+├── manifest.json         # Chrome extension manifest
+├── background.js         # Handles background processes
+├── content.js            # Injects scripts into Gmail
+├── popup.js              # Manages popup UI and logic
+├── assets/               # Images and screenshots for documentation
+├── styles/               # CSS files for extension UI
+└── README.md             # Project documentation
+```
+
+---
+
+## 🧠 How AI Extraction Works
+
+- The extension scans the visible emails in your Gmail inbox.
+- Gemini AI processes the email content to extract:
+    - Task descriptions
+    - Deadlines or due dates
+    - Sender and subject
+    - Summaries or key points
+- Extracted tasks are displayed in a structured checklist for easy management.
+
+---
+
+## 🛡️ Security & Privacy
+
+- Credentials are stored only in your browser's local storage.
+- No data is sent to third-party servers except for Gemini AI API calls.
+- You can clear or update your credentials anytime via the extension popup.
+
+---
+
+## 💡 Tips
+
+- For best results, enable Two-Step Verification on your Google Account.
+- Regularly update your extension for new features and security patches.
+- Use the checklist to keep track of both personal and work-related tasks extracted from emails.
+
+---
 # 📧 Email-to-do_AI ✅  
 This **Chrome extension** enhances **email productivity** by extracting key details from emails and automatically generating a **structured to-do list**. It helps users **stay organized** by identifying important tasks directly from their inbox.  
 
 ---
+
 
 ## 🚀 Steps to Run the Chrome Extension  
 
@@ -94,4 +164,3 @@ The tasks are **extracted from emails**, including:
 📌 **Due Date**: Any mentioned deadline  
 
 ---
->>>>>>> 394cfa4689110a2e0033494888441299435b4e64
